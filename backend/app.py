@@ -1,8 +1,13 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from search_engine import InvertedIndex
 
 app = Flask(__name__)
+CORS(app)
+
 engine = InvertedIndex()
+
+
 
 # Sample documents to preload (you can replace this)
 documents = {
@@ -30,8 +35,9 @@ def add_document():
     content = data.get("content")
     if not doc_id or not content:
         return jsonify({"error": "Missing id or content"}), 400
-    engine.index_documents({doc_id: content})
+    engine.add_document(doc_id, content)  
     return jsonify({"message": "Document added", "id": doc_id})
+
 
 if __name__ == "__main__":
     app.run(debug=True)

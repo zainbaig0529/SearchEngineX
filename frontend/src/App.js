@@ -18,25 +18,25 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App" style={{ padding: "2rem", fontFamily: "Arial" }}>
       <h1>SearchEngineX</h1>
       <input
         type="text"
         value={query}
+        placeholder="Enter search query..."
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && search()}
-        placeholder="Enter search query..."
-        style={{ padding: "8px", width: "300px" }}
+        style={{ padding: "10px", width: "300px" }}
       />
-      <button onClick={search} style={{ marginLeft: "10px", padding: "8px" }}>
+      <button onClick={search} style={{ marginLeft: "10px", padding: "10px 20px" }}>
         Search
       </button>
 
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginTop: "2rem", textAlign: "left" }}>
         {results.length > 0 ? (
           results.map(([docId, content, score]) => (
-            <div key={docId} style={{ marginBottom: "10px", textAlign: "left" }}>
-              <strong>{docId}</strong> — Score: {score.toFixed(4)}
+            <div key={docId} style={{ marginBottom: "20px" }}>
+              <h3>{docId} — Score: {score.toFixed(4)}</h3>
               <p>{content}</p>
             </div>
           ))
