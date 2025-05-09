@@ -9,7 +9,7 @@ function App() {
     if (!query.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
       const data = await res.json();
       setResults(data);
     } catch (err) {
