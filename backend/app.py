@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
-from flask_cors import cross_origin
 from search_engine import InvertedIndex
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})  # ✅ fixes all CORS issues
+
+
 engine = InvertedIndex()
 
 
@@ -19,7 +21,6 @@ for doc_id, text in documents.items():
 
 
 @app.route("/search", methods=["GET"])
-@cross_origin()  # <-- enable CORS for this route
 def search():
     query = request.args.get("q")
     if not query:
@@ -29,7 +30,6 @@ def search():
 
 
 @app.route("/add", methods=["POST"])
-@cross_origin()  # <-- enable CORS here too
 def add_document():
     data = request.get_json()
     doc_id = data.get("id")
@@ -38,6 +38,7 @@ def add_document():
         return jsonify({"error": "Missing id or content"}), 400
     engine.add_document(doc_id, content)
     return jsonify({"message": "Document added", "id": doc_id})
+
 
 
 
